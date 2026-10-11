@@ -221,47 +221,52 @@ Priority:
 <context>
     <name>kisel::AppSettingsWindow</name>
     <message>
-        <location filename="../src/ui/appsettings/app_settings_window.cpp" line="21"/>
+        <location filename="../src/ui/appsettings/app_settings_window.cpp" line="22"/>
         <source>Kisel — Settings</source>
         <translation>Кисель — Настройки</translation>
     </message>
     <message>
-        <location filename="../src/ui/appsettings/app_settings_window.cpp" line="31"/>
+        <location filename="../src/ui/appsettings/app_settings_window.cpp" line="32"/>
         <source>&lt;h3&gt;Global settings&lt;/h3&gt;</source>
         <translation>&lt;h3&gt;Глобальные настройки&lt;/h3&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/appsettings/app_settings_window.cpp" line="54"/>
+        <location filename="../src/ui/appsettings/app_settings_window.cpp" line="55"/>
         <source>General</source>
         <translation>Основное</translation>
     </message>
     <message>
-        <location filename="../src/ui/appsettings/app_settings_window.cpp" line="72"/>
+        <location filename="../src/ui/appsettings/app_settings_window.cpp" line="69"/>
+        <source>Launch</source>
+        <translation>Запуск</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/appsettings/app_settings_window.cpp" line="74"/>
         <source>Platform</source>
         <translation>Платформа</translation>
     </message>
     <message>
-        <location filename="../src/ui/appsettings/app_settings_window.cpp" line="76"/>
+        <location filename="../src/ui/appsettings/app_settings_window.cpp" line="82"/>
         <source>Services</source>
         <translation>Сервисы</translation>
     </message>
     <message>
-        <location filename="../src/ui/appsettings/app_settings_window.cpp" line="58"/>
+        <location filename="../src/ui/appsettings/app_settings_window.cpp" line="59"/>
         <source>Prefixes</source>
         <translation>Префиксы</translation>
     </message>
     <message>
-        <location filename="../src/ui/appsettings/app_settings_window.cpp" line="34"/>
+        <location filename="../src/ui/appsettings/app_settings_window.cpp" line="35"/>
         <source>&lt;i&gt;Hover over the option to learn more&lt;/i&gt;</source>
         <translation>&lt;i&gt;Наведите на опцию чтобы узнать больше&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/appsettings/app_settings_window.cpp" line="67"/>
+        <location filename="../src/ui/appsettings/app_settings_window.cpp" line="78"/>
         <source>Compatibility</source>
         <translation>Совместимость</translation>
     </message>
     <message>
-        <location filename="../src/ui/appsettings/app_settings_window.cpp" line="63"/>
+        <location filename="../src/ui/appsettings/app_settings_window.cpp" line="64"/>
         <source>Shortcuts</source>
         <translation>Ярлыки</translation>
     </message>
@@ -1196,32 +1201,37 @@ Priority:
 <context>
     <name>kisel::PrefixSettingsWindow</name>
     <message>
-        <location filename="../src/ui/prefixes/prefix_settings_window.cpp" line="19"/>
+        <location filename="../src/ui/prefixes/prefix_settings_window.cpp" line="20"/>
         <source>Kisel — Prefix Settings</source>
         <translation>Кисель — Настройки префикса</translation>
     </message>
     <message>
-        <location filename="../src/ui/prefixes/prefix_settings_window.cpp" line="26"/>
+        <location filename="../src/ui/prefixes/prefix_settings_window.cpp" line="27"/>
         <source>&lt;h3&gt;Settings for the &quot;%1&quot; prefix&lt;/h3&gt;</source>
         <translation>&lt;h3&gt;Настройки для префикса &quot;%1&quot;&lt;/h3&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/prefixes/prefix_settings_window.cpp" line="29"/>
+        <location filename="../src/ui/prefixes/prefix_settings_window.cpp" line="30"/>
         <source>&lt;i&gt;Hover over the option to learn more&lt;/i&gt;</source>
         <translation>&lt;i&gt;Наведите на опцию чтобы узнать больше&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/prefixes/prefix_settings_window.cpp" line="49"/>
+        <location filename="../src/ui/prefixes/prefix_settings_window.cpp" line="50"/>
+        <source>Launch</source>
+        <translation>Запуск</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/prefixes/prefix_settings_window.cpp" line="55"/>
         <source>Platform</source>
         <translation>Платформа</translation>
     </message>
     <message>
-        <location filename="../src/ui/prefixes/prefix_settings_window.cpp" line="53"/>
+        <location filename="../src/ui/prefixes/prefix_settings_window.cpp" line="59"/>
         <source>Compatibility</source>
         <translation>Совместимость</translation>
     </message>
     <message>
-        <location filename="../src/ui/prefixes/prefix_settings_window.cpp" line="57"/>
+        <location filename="../src/ui/prefixes/prefix_settings_window.cpp" line="63"/>
         <source>Services</source>
         <translation>Сервисы</translation>
     </message>
@@ -1229,52 +1239,120 @@ Priority:
 <context>
     <name>kisel::RunManager</name>
     <message>
-        <location filename="../src/core/run/run_manager.cpp" line="263"/>
+        <location filename="../src/core/run/run_manager.cpp" line="288"/>
         <source>Updating the component list</source>
         <translation>Обновление списка компонентов</translation>
     </message>
     <message>
-        <location filename="../src/core/run/run_manager.cpp" line="268"/>
+        <location filename="../src/core/run/run_manager.cpp" line="293"/>
         <source>Updating the list of installed components</source>
         <translation>Обновление списка установленных компонентов</translation>
     </message>
     <message>
-        <location filename="../src/core/run/run_manager.cpp" line="273"/>
+        <location filename="../src/core/run/run_manager.cpp" line="298"/>
         <source>Installing components</source>
         <translation>Установка компонентов</translation>
     </message>
 </context>
 <context>
+    <name>kisel::RunSettingsPage</name>
+    <message>
+        <location filename="../src/ui/settingspages/run_settings_page.cpp" line="26"/>
+        <source>Launch command</source>
+        <translation>Команда запуска</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settingspages/run_settings_page.cpp" line="34"/>
+        <source>Edit the launch command</source>
+        <translation>Редактировать команду запуска</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settingspages/run_settings_page.cpp" line="44"/>
+        <source>Environment variables</source>
+        <translation>Переменные окружения</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settingspages/run_settings_page.cpp" line="48"/>
+        <source>Variable</source>
+        <translation>Переменная</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settingspages/run_settings_page.cpp" line="48"/>
+        <source>Value</source>
+        <translation>Значение</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settingspages/run_settings_page.cpp" line="64"/>
+        <source>Add</source>
+        <translation>Добавить</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settingspages/run_settings_page.cpp" line="97"/>
+        <source>The string must contain %command%</source>
+        <translation>Строка должна содержать %command%</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settingspages/run_settings_page.cpp" line="104"/>
+        <source>Multiple %command% found — only one is allowed</source>
+        <translation>Найдено несколько %command% — допустим только один</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settingspages/run_settings_page.cpp" line="119"/>
+        <source>Environment variables (KEY=VALUE) are not allowed — use the table below</source>
+        <translation>Переменные окружения (KEY=VALUE) запрещены — используйте таблицу ниже</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settingspages/run_settings_page.cpp" line="155"/>
+        <source>Delete</source>
+        <translation>Удалить</translation>
+    </message>
+</context>
+<context>
     <name>kisel::ServicesSettingsPage</name>
     <message>
-        <location filename="../src/ui/settingspages/services_settings_page.cpp" line="21"/>
+        <location filename="../src/ui/settingspages/services_settings_page.cpp" line="26"/>
         <source>Enable Performance Monitor (requires mangohud to be installed)</source>
         <translation>Включить монитор производительности (требуется установленный mangohud)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/services_settings_page.cpp" line="30"/>
+        <location filename="../src/ui/settingspages/services_settings_page.cpp" line="35"/>
         <source>Enable Vulkan app screen capture for OBS (requires obs-vkcapture to be installed)</source>
         <translation>Включить захват экрана приложений на Vulkan для OBS (требуется установленный obs-vkcapture)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/services_settings_page.cpp" line="38"/>
+        <location filename="../src/ui/settingspages/services_settings_page.cpp" line="43"/>
         <source>Enable accessibility controls, such as controlling the application interface with a gamepad</source>
         <translation>Включить специальные возможности управления, такие как управление интерфейсом с помощью геймпада</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/services_settings_page.cpp" line="51"/>
+        <location filename="../src/ui/settingspages/services_settings_page.cpp" line="56"/>
         <source>Enable Gamescope compositor (requires gamescope to be installed)</source>
         <translation>Включить композитор Gamescope (требуется установленный gamescope)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/services_settings_page.cpp" line="56"/>
+        <location filename="../src/ui/settingspages/services_settings_page.cpp" line="65"/>
         <source>Arguments</source>
         <translation>Аргументы</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/services_settings_page.cpp" line="57"/>
+        <location filename="../src/ui/settingspages/services_settings_page.cpp" line="66"/>
         <source>example: -W 1920 -H 1080 -r 60</source>
         <translation>пример: -W 1920 -H 1080 -r 60</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settingspages/services_settings_page.cpp" line="96"/>
+        <source>You don&apos;t need to specify &quot;gamescope&quot;, only its arguments</source>
+        <translation>Не нужно указывать &quot;gamescope&quot;, только его аргументы</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settingspages/services_settings_page.cpp" line="107"/>
+        <source>Environment variables (KEY=VALUE) are not allowed — use the &quot;Launch&quot; section</source>
+        <translation>Переменные окружения (KEY=VALUE) запрещены — используйте раздел &quot;Запуск&quot;</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settingspages/services_settings_page.cpp" line="113"/>
+        <source>Arguments must start with &apos;-&apos;</source>
+        <translation>Аргументы должны начинаться с &apos;-&apos;</translation>
     </message>
 </context>
 <context>

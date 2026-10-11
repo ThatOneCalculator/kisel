@@ -10,6 +10,10 @@ class PrefixSettings : public BaseSettings {
 public:
     explicit PrefixSettings(const QString& path, QObject* parent = nullptr);
 
+    // Launch
+    [[nodiscard]] QString customRunCommand() const override;
+    [[nodiscard]] QMap<QString, QVariant> envMap() override;
+
     // Services
     [[nodiscard]] bool mangoHudEnabled() const override;
     [[nodiscard]] bool gamescopeEnabled() const override;

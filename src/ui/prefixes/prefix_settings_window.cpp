@@ -7,6 +7,7 @@
 
 #include "ui/settingspages/compatibility_settings_page.hpp"
 #include "ui/settingspages/platform_settings_page.hpp"
+#include "ui/settingspages/run_settings_page.hpp"
 #include "ui/settingspages/services_settings_page.hpp"
 
 using namespace Qt::StringLiterals;
@@ -43,6 +44,11 @@ PrefixSettingsWindow::PrefixSettingsWindow(Prefix* prefix, QWidget* parent)
         stackedPages->setCurrentIndex(index);
     });
     contentLayout->addWidget(stackedPages);
+
+    auto* runPage = new RunSettingsPage(m_settings, this);
+    runPage->layout()->setContentsMargins(0, 0, 0, 0);
+    new QListWidgetItem(QIcon::fromTheme("media-playback-start"), tr("Launch"), pageListView);
+    stackedPages->addWidget(runPage);
 
     auto* platformPage = new PlatformSettingsPage(m_settings, this);
     platformPage->layout()->setContentsMargins(0, 0, 0, 0);

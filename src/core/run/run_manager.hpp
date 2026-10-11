@@ -55,6 +55,7 @@ private slots:
 private:
     bool setupPrefix(RunConfig* config);
     bool setupCt(RunConfig* config);
+    static QProcessEnvironment setupEnv(RunConfig* config);
     bool setupProcess(RunConfig* config, const QStringList& runnerCommandParts, QProcessEnvironment& env, const QStringList& args = { });
     static QStringList setupProtonCommand(RunConfig* config, QProcessEnvironment& env);
     QStringList setupUmuCommand(RunConfig* config, QProcessEnvironment& env);

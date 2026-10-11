@@ -6,8 +6,34 @@ using namespace Qt::StringLiterals;
 using namespace kisel;
 
 PrefixSettings::PrefixSettings(const QString& path, QObject* parent)
-    : BaseSettings(path, parent), m_appSettings(APP_SETTINGS)
+    : BaseSettings(path, parent)
+    , m_appSettings(APP_SETTINGS)
 {
+}
+
+QString PrefixSettings::customRunCommand() const
+{
+    return value("customRunCommand"_L1, m_appSettings->customRunCommand()).toString();
+}
+
+QMap<QString, QVariant> PrefixSettings::envMap()
+{
+    QMap<QString, QVariant> map;
+
+    beginEnv();
+    const QStringList keys = childKeys();
+
+    if (keys.isEmpty()) {
+        endGroup();
+        return m_appSettings->envMap();
+    }
+
+    for (const auto& key : keys) {
+        map.insert(key, value(key));
+    }
+    endGroup();
+
+    return map;
 }
 
 bool PrefixSettings::mangoHudEnabled() const

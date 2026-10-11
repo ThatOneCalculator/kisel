@@ -14,6 +14,13 @@ public:
     static QVersionNumber vulkanApiVersion();
     static bool deviceSupportsModernVulkan();
 
+    // Launch
+    void setCustomRunCommand(const QString& command);
+    [[nodiscard]] virtual QString customRunCommand() const;
+    void beginEnv();
+    void insertEnv(const QString& key, const QVariant& value);
+    [[nodiscard]] virtual QMap<QString, QVariant> envMap();
+
     // Services
     void setMangoHudEnabled(bool enabled);
     [[nodiscard]] virtual bool mangoHudEnabled() const;

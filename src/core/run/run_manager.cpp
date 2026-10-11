@@ -33,7 +33,7 @@ void RunManager::runExe(RunConfig* config)
         return;
     }
 
-    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    QProcessEnvironment env = setupEnv(config);
     QStringList runnerCommandParts;
 
     if (config->prefixSettings()->steamEnabled()) {
@@ -77,6 +77,7 @@ bool RunManager::setupProcess(RunConfig* config, const QStringList& runnerComman
     env.insert("PROTON_ENABLE_NVAPI"_L1, prefixSettings->nvapiEnabled() ? Y : N);
     env.insert("PROTON_USE_SDL"_L1, prefixSettings->sdlInputEnabled() ? Y : N);
 
+    QStringList fullCommandParts;
     QStringList baseCommandParts;
 
     const QString& gamescopePath = APP_SETTINGS->gamescopePath();
@@ -84,15 +85,27 @@ bool RunManager::setupProcess(RunConfig* config, const QStringList& runnerComman
         baseCommandParts << gamescopePath << QProcess::splitCommand(prefixSettings->gamescopeArgs()) << "--"_L1;
     }
 
-    baseCommandParts << runnerCommandParts << args;
-    m_fullCommandString = baseCommandParts.join(" ");
-    QString program = baseCommandParts.takeFirst();
+    baseCommandParts << runnerCommandParts << args; // %command%
+
+    QStringList customRunCommandParts = QProcess::splitCommand(prefixSettings->customRunCommand());
+    const qsizetype commandIdx = customRunCommandParts.indexOf("%command%"_L1);
+
+    if (commandIdx < 0) {
+        fullCommandParts = baseCommandParts;
+    } else {
+        QStringList leftCustomRunCommand = customRunCommandParts.mid(0, commandIdx);
+        QStringList rightCustomRunCommand = customRunCommandParts.mid(commandIdx + 1);
+        fullCommandParts = leftCustomRunCommand << baseCommandParts << rightCustomRunCommand;
+    }
+
+    m_fullCommandString = fullCommandParts.join(u" ");
+    QString program = fullCommandParts.takeFirst();
 
     m_process = new QProcess(this);
     m_process->setWorkingDirectory(config->workingDirPath());
     m_process->setProcessEnvironment(env);
     m_process->setProgram(program);
-    m_process->setArguments(baseCommandParts);
+    m_process->setArguments(fullCommandParts);
 
     return true;
 }
@@ -141,6 +154,18 @@ bool RunManager::setupCt(RunConfig* config)
         prefixSettings->setCtPath(runConfigCtPath); // Save run settings
     }
     return true;
+}
+
+QProcessEnvironment RunManager::setupEnv(RunConfig* config)
+{
+    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+
+    const QMap<QString, QVariant> map = config->prefixSettings()->envMap();
+    for (auto [key, value] : map.asKeyValueRange()) {
+        env.insert(key, value.toString());
+    }
+
+    return env;
 }
 
 QStringList RunManager::setupProtonCommand(RunConfig* config, QProcessEnvironment& env)

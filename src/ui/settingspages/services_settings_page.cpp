@@ -3,6 +3,9 @@
 #include <QCheckBox>
 #include <QLabel>
 #include <QLineEdit>
+#include <QProcess>
+#include <QRegularExpression>
+#include <QToolTip>
 #include <QVBoxLayout>
 
 #include "core/settings/app_settings.hpp"
@@ -11,7 +14,9 @@ using namespace Qt::StringLiterals;
 using namespace kisel;
 
 ServicesSettingsPage::ServicesSettingsPage(BaseSettings* settings, QWidget* parent)
-    : QWidget(parent), m_settings(settings)
+    : QWidget(parent)
+    , m_settings(settings)
+    , m_gamescopeArgsLineEdit(new QLineEdit(this))
 {
     auto* layout = new QVBoxLayout(this);
     layout->setAlignment(Qt::AlignTop);
@@ -52,19 +57,81 @@ ServicesSettingsPage::ServicesSettingsPage(BaseSettings* settings, QWidget* pare
     gamescopeCheckBox->setChecked(m_settings->gamescopeEnabled());
     layout->addWidget(gamescopeCheckBox);
 
-    auto* gamescopeArgsLineEdit = new QLineEdit(this);
-    gamescopeArgsLineEdit->setToolTip(tr("Arguments"));
-    gamescopeArgsLineEdit->setPlaceholderText(tr("example: -W 1920 -H 1080 -r 60"));
-    gamescopeArgsLineEdit->setText(m_settings->gamescopeArgs());
-    gamescopeArgsLineEdit->setEnabled(gamescopeCheckBox->isEnabled() && m_settings->gamescopeEnabled());
-    layout->addWidget(gamescopeArgsLineEdit);
+    m_normalEditPalette = m_gamescopeArgsLineEdit->palette();
+    m_errorEditPalette = m_gamescopeArgsLineEdit->palette();
+    m_errorEditPalette.setColor(QPalette::Text, QColor(255, 0, 0));
 
-    connect(gamescopeCheckBox, &QCheckBox::clicked, this, [this, gamescopeArgsLineEdit](bool checked) {
+    m_gamescopeArgsLineEdit->setClearButtonEnabled(true);
+    m_gamescopeArgsLineEdit->setToolTip(tr("Arguments"));
+    m_gamescopeArgsLineEdit->setPlaceholderText(tr("example: -W 1920 -H 1080 -r 60"));
+    m_gamescopeArgsLineEdit->setText(m_settings->gamescopeArgs());
+    m_gamescopeArgsLineEdit->setEnabled(gamescopeCheckBox->isEnabled() && m_settings->gamescopeEnabled());
+    layout->addWidget(m_gamescopeArgsLineEdit);
+
+    connect(gamescopeCheckBox, &QCheckBox::clicked, this, [this](bool checked) {
         m_settings->setGamescopeEnabled(checked);
-        gamescopeArgsLineEdit->setEnabled(checked);
+        m_gamescopeArgsLineEdit->setEnabled(checked);
     });
 
-    connect(gamescopeArgsLineEdit, &QLineEdit::textEdited, this, [this](const QString& args) {
-        m_settings->setGamescopeArgs(args);
+    connect(m_gamescopeArgsLineEdit, &QLineEdit::textEdited, this, &ServicesSettingsPage::onGamescopeArgsEditFinished);
+    connect(m_gamescopeArgsLineEdit, &QLineEdit::editingFinished, this, [this] {
+        m_gamescopeArgsLineEdit->setText(m_settings->gamescopeArgs());
+        clearGamescopeArgsEditError();
     });
+}
+
+void ServicesSettingsPage::onGamescopeArgsEditFinished(QString text)
+{
+    text = text.trimmed();
+
+    if (text.isEmpty()) {
+        clearGamescopeArgsEditError();
+        return;
+    }
+
+    const QStringList tokens = QProcess::splitCommand(text);
+
+    // 1. gamescope
+    if (tokens.contains("gamescope"_L1)) {
+        setGamescopeArgsEditError(tr("You don't need to specify \"gamescope\", only its arguments"));
+        return;
+    }
+
+    // 2. KEY=VALUE
+    static const QRegularExpression envPattern(
+        R"(^[\p{L}_][\p{L}\p{N}_]*=)"_L1,
+        QRegularExpression::UseUnicodePropertiesOption);
+
+    for (const QString& token : tokens) {
+        if (!token.startsWith(u'-') && envPattern.match(token).hasMatch()) {
+            setGamescopeArgsEditError(tr("Environment variables (KEY=VALUE) are not allowed — use the \"Launch\" section"));
+            return;
+        }
+
+        // 3. -arg
+        if (!token.startsWith(u'-') && token.contains(u'=')) {
+            setGamescopeArgsEditError(tr("Arguments must start with '-'"));
+            return;
+        }
+    }
+
+    clearGamescopeArgsEditError();
+}
+
+void ServicesSettingsPage::setGamescopeArgsEditError(const QString& message)
+{
+    m_gamescopeArgsLineEdit->setPalette(m_errorEditPalette);
+    m_gamescopeArgsLineEdit->setToolTip(message);
+
+    if (m_gamescopeArgsLineEdit->hasFocus()) {
+        QToolTip::showText(mapToGlobal(m_gamescopeArgsLineEdit->pos()), message, m_gamescopeArgsLineEdit);
+    }
+}
+
+void ServicesSettingsPage::clearGamescopeArgsEditError()
+{
+    m_gamescopeArgsLineEdit->setPalette(m_normalEditPalette);
+    setToolTip(QString());
+    QToolTip::hideText();
+    m_settings->setGamescopeArgs(m_gamescopeArgsLineEdit->text().trimmed());
 }

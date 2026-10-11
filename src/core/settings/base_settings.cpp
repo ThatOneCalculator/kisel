@@ -30,6 +30,42 @@ bool BaseSettings::deviceSupportsModernVulkan()
     return vulkanApiVersion() >= modernApiVersion;
 }
 
+void BaseSettings::setCustomRunCommand(const QString& command)
+{
+    setValue("customRunCommand"_L1, command);
+}
+
+QString BaseSettings::customRunCommand() const
+{
+    return value("customRunCommand"_L1).toString();
+}
+
+void BaseSettings::beginEnv()
+{
+    beginGroup("env"_L1);
+}
+
+void BaseSettings::insertEnv(const QString& key, const QVariant& value)
+{
+    beginEnv();
+    setValue(key, value);
+    endGroup();
+}
+
+QMap<QString, QVariant> BaseSettings::envMap()
+{
+    QMap<QString, QVariant> map;
+
+    beginEnv();
+    const QStringList keys = childKeys();
+    for (const auto& key : keys) {
+        map.insert(key, value(key));
+    }
+    endGroup();
+
+    return map;
+}
+
 void BaseSettings::setMangoHudEnabled(bool enabled)
 {
     setValue("mangohud"_L1, enabled);

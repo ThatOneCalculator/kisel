@@ -6,6 +6,7 @@ target_sources(kisel PRIVATE
     settingspages/platform_settings_page.hpp settingspages/platform_settings_page.cpp
     settingspages/services_settings_page.hpp settingspages/services_settings_page.cpp
     settingspages/compatibility_settings_page.hpp settingspages/compatibility_settings_page.cpp
+    settingspages/run_settings_page.hpp settingspages/run_settings_page.cpp
     appsettings/app_settings_window.hpp appsettings/app_settings_window.cpp
     aboutapp/about_app_dialog.hpp aboutapp/about_app_dialog.cpp
     prefixes/new_prefix_dialog.hpp prefixes/new_prefix_dialog.cpp

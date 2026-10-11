@@ -9,6 +9,7 @@
 #include "ui/settingspages/app_platform_settings_page.hpp"
 #include "ui/settingspages/app_prefixes_settings_page.hpp"
 #include "ui/settingspages/compatibility_settings_page.hpp"
+#include "ui/settingspages/run_settings_page.hpp"
 #include "ui/settingspages/services_settings_page.hpp"
 #include "ui/shortcuts/shortcuts_list_widget.hpp"
 
@@ -63,14 +64,19 @@ AppSettingsWindow::AppSettingsWindow(QWidget* parent)
     new QListWidgetItem(QIcon::fromTheme("link"), tr("Shortcuts"), pageListView);
     stackedPages->addWidget(shortcutPage);
 
-    auto* ctPage = new CompatibilitySettingsPage(APP_SETTINGS, this);
-    new QListWidgetItem(QIcon::fromTheme("tools-wizard"), tr("Compatibility"), pageListView);
-    stackedPages->addWidget(ctPage);
+    auto* runPage = new RunSettingsPage(APP_SETTINGS, this);
+    runPage->layout()->setContentsMargins(0, 0, 0, 0);
+    new QListWidgetItem(QIcon::fromTheme("media-playback-start"), tr("Launch"), pageListView);
+    stackedPages->addWidget(runPage);
 
     auto* platformPage = new AppPlatformSettingsPage(APP_SETTINGS, this);
     platformPage->layout()->setContentsMargins(0, 0, 0, 0);
     new QListWidgetItem(QIcon::fromTheme("computer-symbolic"), tr("Platform"), pageListView);
     stackedPages->addWidget(platformPage);
+
+    auto* ctPage = new CompatibilitySettingsPage(APP_SETTINGS, this);
+    new QListWidgetItem(QIcon::fromTheme("tools-wizard"), tr("Compatibility"), pageListView);
+    stackedPages->addWidget(ctPage);
 
     auto* servicesPage = new ServicesSettingsPage(APP_SETTINGS, this);
     new QListWidgetItem(QIcon::fromTheme("flag"), tr("Services"), pageListView);

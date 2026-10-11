@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QWidget>
+#include <QLineEdit>
 
 #include "core/settings/base_settings.hpp"
 
@@ -11,7 +11,16 @@ class ServicesSettingsPage : public QWidget {
 public:
     explicit ServicesSettingsPage(BaseSettings* settings, QWidget* parent = nullptr);
 
+private slots:
+    void onGamescopeArgsEditFinished(QString text);
+
 private:
+    void setGamescopeArgsEditError(const QString& message);
+    void clearGamescopeArgsEditError();
+
+    QPalette m_normalEditPalette;
+    QPalette m_errorEditPalette;
     BaseSettings* m_settings;
+    QLineEdit* m_gamescopeArgsLineEdit;
 };
 }
