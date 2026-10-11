@@ -210,7 +210,7 @@ QStringList RunManager::setupProtonCommand(RunConfig* config, QProcessEnvironmen
         env.insert("WINEDLLOVERRIDES"_L1, "steam_api64=n;onlinefix64=n;winpixeventruntime=n,b"_L1);
     }
 
-    return { config->ct()->dir().filePath("/proton"_L1), "run"_L1, config->exePath() };
+    return { config->ct()->dir().filePath("proton"_L1), "run"_L1, config->exePath() };
 }
 
 QStringList RunManager::setupUmuCommand(RunConfig* config, QProcessEnvironment& env)

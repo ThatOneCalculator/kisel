@@ -35,7 +35,13 @@ AppPlatformSettingsPage::AppPlatformSettingsPage(AppSettings* settings, QWidget*
     });
     umuBoxLayout->addWidget(steamEnvCheckBox);
 
-    auto* useSteamBox = new QGroupBox(tr("Use Steam"), this);
+    auto* useSteamBox = new QGroupBox(tr("Use Steam %1").arg(APP_SETTINGS->isFlatpak() ? tr("(Kisel is a FLATPAK!)") : QString()), this);
+    if (APP_SETTINGS->isFlatpak()) {
+        QPalette warningPalette = useSteamBox->palette();
+        warningPalette.setColor(QPalette::WindowText, QColor(255, 215, 0));
+        useSteamBox->setPalette(warningPalette);
+        useSteamBox->setToolTip(tr("The Flatpak version of the program is being used, compatibility with Steam is not guaranteed!"));
+    }
     useSteamBox->setEnabled(AppSettings::steamDirExists());
     useSteamBox->setCheckable(true);
     useSteamBox->setChecked(m_settings->steamEnabled());

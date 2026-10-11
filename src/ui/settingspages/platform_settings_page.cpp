@@ -14,7 +14,8 @@ using namespace Qt::StringLiterals;
 using namespace kisel;
 
 PlatformSettingsPage::PlatformSettingsPage(PrefixSettings* prefixSettings, QWidget* parent)
-    : QWidget(parent), m_settings(prefixSettings)
+    : QWidget(parent)
+    , m_settings(prefixSettings)
 {
     auto* layout = new QVBoxLayout(this);
 
@@ -84,7 +85,13 @@ PlatformSettingsPage::PlatformSettingsPage(PrefixSettings* prefixSettings, QWidg
     });
     storeLayout->addWidget(clearStoreButton);
 
-    auto* useSteamBox = new QGroupBox(tr("Use Steam"), this);
+    auto* useSteamBox = new QGroupBox(tr("Use Steam %1").arg(APP_SETTINGS->isFlatpak() ? tr("(Kisel is a FLATPAK!)") : QString()), this);
+    if (APP_SETTINGS->isFlatpak()) {
+        QPalette warningPalette = useSteamBox->palette();
+        warningPalette.setColor(QPalette::WindowText, QColor(255, 215, 0));
+        useSteamBox->setPalette(warningPalette);
+        useSteamBox->setToolTip(tr("The Flatpak version of the program is being used, compatibility with Steam is not guaranteed!"));
+    }
     useSteamBox->setEnabled(APP_SETTINGS->steamDirExists());
     useSteamBox->setCheckable(true);
     useSteamBox->setChecked(m_settings->steamEnabled());
