@@ -6,7 +6,8 @@ RUN dnf install --disablerepo=fedora-cisco-openh264 -y \
     gcc-c++ \
     ninja-build \
     qt6-qtbase-devel \
-    qt6-qttools-devel
+    qt6-qttools-devel \
+    vulkan-devel
 
 COPY . /src
 WORKDIR /src
