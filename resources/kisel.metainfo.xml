@@ -18,7 +18,7 @@
 
   <branding>
     <color type="primary" scheme_preference="light">#f5f5f5</color>
-    <color type="primary" scheme_preference="dark">#1b5583</color>
+    <color type="primary" scheme_preference="dark">#1C2634</color>
   </branding>
 
   <description>
@@ -116,6 +116,25 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.5.0" date="2026-10-12">
+      <description translate="no">
+        <ul>
+          <li>New prefix type: Portable (creates a ".kisel-prefix" next to the executable file)</li>
+          <li>Configuring environment variables and startup commands</li>
+          <li>Gamescope (Flatpak not supported)</li>
+          <li>Instant-run option, launch without creating a main window</li>
+          <li>Setting the path for prefixes</li>
+          <li>More global settings</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.4.1" date="2026-09-29">
+      <description translate="no">
+        <ul>
+          <li>Steam overlay fix</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.4.0" date="2026-09-14">
       <description translate="no">
         <ul>
