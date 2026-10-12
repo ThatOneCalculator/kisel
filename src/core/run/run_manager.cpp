@@ -98,7 +98,7 @@ bool RunManager::setupProcess(RunConfig* config, const QStringList& runnerComman
         fullCommandParts = leftCustomRunCommand << baseCommandParts << rightCustomRunCommand;
     }
 
-    m_fullCommandString = fullCommandParts.join(u" ");
+    m_fullCommandString = fullCommandParts.join(u' ');
     QString program = fullCommandParts.takeFirst();
 
     m_process = new QProcess(this);

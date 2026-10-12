@@ -61,7 +61,7 @@ NewCtDialog::NewCtDialog(QWidget* parent)
     auto* installationLocationsLabel = new QLabel(tr("Installation location:"), this);
     layout->addWidget(installationLocationsLabel);
     for (const auto& ctDir : CTS_DIR_LIST) {
-        if (ctDir.absolutePath().contains(QStringLiteral("steam"))) {
+        if (ctDir.absolutePath().startsWith(APP_SETTINGS->steamDir().path())) {
             m_installationLocationsComboBox->addItem(QIcon::fromTheme("steam"), ctDir.path());
         } else {
             m_installationLocationsComboBox->addItem(QIcon(":/icons/kisel.svg"), ctDir.path());

@@ -3,7 +3,7 @@
 #include <QProcess>
 
 #include "core/compatibilitytools/ct_model.hpp"
-#include "core/prefix/prefix_model.hpp"
+#include "core/prefixes/prefix_model.hpp"
 #include "run_config.hpp"
 
 namespace kisel {

@@ -52,6 +52,8 @@ target_link_libraries(kisel
     Qt::Network
 )
 
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/packages)
+
 install(TARGETS kisel
     BUNDLE  DESTINATION .
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}

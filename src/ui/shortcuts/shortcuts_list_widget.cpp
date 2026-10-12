@@ -55,7 +55,7 @@ void ShortcutsListWidget::contextMenuEvent(QContextMenuEvent* event)
     const QModelIndex currentIndex = m_proxyModel->mapToSource(m_tableView->selectionModel()->currentIndex());
 
     QAction* editAction = menu.addAction(QIcon::fromTheme("edit"), tr("Edit"));
-    connect(editAction, &QAction::triggered, this, [this, currentIndex]() {
+    connect(editAction, &QAction::triggered, this, [this, currentIndex] {
         QString exeFilePath = currentIndex.data(ShortcutModel::ExeFileRole).toString();
         QString prefixPath = currentIndex.data(ShortcutModel::PrefixRole).toString();
         Prefix* prefix = PREFIX_MODEL->getByPath(prefixPath);
@@ -66,19 +66,19 @@ void ShortcutsListWidget::contextMenuEvent(QContextMenuEvent* event)
     QMenu* openMenu = menu.addMenu(QIcon::fromTheme("document-open-folder"), tr("Show"));
 
     QAction* openExeFileAction = openMenu->addAction(tr("Executable file"));
-    connect(openExeFileAction, &QAction::triggered, this, [currentIndex]() {
+    connect(openExeFileAction, &QAction::triggered, this, [currentIndex] {
         QString exeFilePath = QFileInfo(currentIndex.data(ShortcutModel::ExeFileRole).toString()).dir().path();
         QDesktopServices::openUrl(QUrl::fromLocalFile(exeFilePath));
     });
 
     QAction* openShortcutAction = openMenu->addAction(tr("Shortcut file"));
-    connect(openShortcutAction, &QAction::triggered, this, [currentIndex]() {
+    connect(openShortcutAction, &QAction::triggered, this, [currentIndex] {
         QString shortcutPath = QFileInfo(currentIndex.data(ShortcutModel::PathRole).toString()).dir().path();
         QDesktopServices::openUrl(QUrl::fromLocalFile(shortcutPath));
     });
 
     QAction* openPrefixAction = openMenu->addAction(tr("Prefix"));
-    connect(openPrefixAction, &QAction::triggered, this, [this, currentIndex]() {
+    connect(openPrefixAction, &QAction::triggered, this, [this, currentIndex] {
         const QString prefixPath = currentIndex.data(ShortcutModel::PrefixRole).toString();
         if (prefixPath.isEmpty()) {
             QMessageBox::critical(this, tr("Error"), tr("The \"%1\" prefix does not exist").arg(prefixPath));
@@ -90,7 +90,7 @@ void ShortcutsListWidget::contextMenuEvent(QContextMenuEvent* event)
     menu.addSeparator();
 
     QAction* deleteAction = menu.addAction(QIcon::fromTheme("entry-delete"), tr("Delete"));
-    connect(deleteAction, &QAction::triggered, this, [this, selectedIndexes]() {
+    connect(deleteAction, &QAction::triggered, this, [this, selectedIndexes] {
         if (QMessageBox::question(this, tr("Confirm"), tr("Remove the selected shortcuts?")) == QMessageBox::Yes) {
             for (const auto& index : std::views::reverse(selectedIndexes)) {
                 SHORTCUT_MODEL->removeRows(m_proxyModel->mapToSource(index).row(), 1);

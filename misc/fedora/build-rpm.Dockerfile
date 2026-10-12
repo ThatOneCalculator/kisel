@@ -1,4 +1,4 @@
-FROM fedora:44
+FROM fedora:latest
 
 RUN dnf install --disablerepo=fedora-cisco-openh264 -y \
     rpm-build \

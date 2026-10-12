@@ -40,15 +40,13 @@ AppSettingsGeneralPage::AppSettingsGeneralPage(QWidget* parent)
     const QString savedStyle = APP_SETTINGS->styleName();
     if (styles.contains(savedStyle)) {
         styleComboBox->setCurrentText(savedStyle);
-    } else {
-        styleComboBox->setCurrentText(QStringLiteral("Fusion"));
     }
     connect(styleComboBox, &QComboBox::currentTextChanged, this, [](const QString& styleName) {
         APP_SETTINGS->setStyleName(styleName);
     });
     layout->addWidget(styleComboBox);
 
-    auto* iconThemeTypeLabel = new QLabel(tr("Icon theme type"), this);
+    auto* iconThemeTypeLabel = new QLabel(tr("Icon theme"), this);
     layout->addWidget(iconThemeTypeLabel);
 
     auto* iconThemeTypeComboBox = new QComboBox(this);

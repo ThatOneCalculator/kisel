@@ -42,7 +42,7 @@ NewPrefixDialog::NewPrefixDialog(QWidget* parent)
         m_saveButton->setEnabled(PREFIX_MODEL->isValidPrefixName(text));
     });
 
-    connect(m_saveButton, &QPushButton::clicked, this, [this]() {
+    connect(m_saveButton, &QPushButton::clicked, this, [this] {
         Prefix* prefix = PREFIX_MODEL->add(APP_SETTINGS->prefixesDir().filePath(m_nameInput->text()));
         prefix->makePath();
         close();

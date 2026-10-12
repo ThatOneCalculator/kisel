@@ -4,7 +4,7 @@
 
 #include "core/compatibilitytools/ct_installer.hpp"
 #include "core/compatibilitytools/ct_model.hpp"
-#include "core/prefix/prefix_model.hpp"
+#include "core/prefixes/prefix_model.hpp"
 #include "core/run/run_manager.hpp"
 #include "core/shortcuts/shortcut_model.hpp"
 

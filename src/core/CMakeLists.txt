@@ -6,8 +6,8 @@ target_sources(kisel PRIVATE
     commandline/command_line_utils.hpp commandline/command_line_utils.cpp
     logging/logging.hpp logging/logging.cpp
     executablefile/executable_file.hpp executablefile/executable_file.cpp
-    prefix/prefix.hpp prefix/prefix.cpp
-    prefix/prefix_model.hpp prefix/prefix_model.cpp
+    prefixes/prefix.hpp prefixes/prefix.cpp
+    prefixes/prefix_model.hpp prefixes/prefix_model.cpp
     compatibilitytools/ct.hpp compatibilitytools/ct.cpp
     compatibilitytools/ct_model.hpp compatibilitytools/ct_model.cpp
     compatibilitytools/ct_installer.hpp compatibilitytools/ct_installer.cpp

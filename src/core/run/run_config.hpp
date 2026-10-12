@@ -5,7 +5,7 @@
 
 #include "core/compatibilitytools/ct.hpp"
 #include "core/executablefile/executable_file.hpp"
-#include "core/prefix/prefix.hpp"
+#include "core/prefixes/prefix.hpp"
 
 namespace kisel {
 class RunConfig : public QObject {

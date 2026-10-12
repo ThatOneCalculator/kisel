@@ -8,9 +8,9 @@
 #include <utility>
 
 #include "core/app/app.hpp"
-#include "core/settings/app_settings.hpp"
 #include "core/executablefile/executable_file.hpp"
-#include "core/prefix/prefix_model.hpp"
+#include "core/prefixes/prefix_model.hpp"
+#include "core/settings/app_settings.hpp"
 
 using namespace Qt::StringLiterals;
 using namespace kisel;
@@ -288,7 +288,7 @@ const QMap<QString, QString>& EditShortcutsDialog::categoryMap()
         { "Science"_L1, tr("Science") },
         { "Settings"_L1, tr("Settings") },
         { "System"_L1, tr("System") },
-        { "Utility"_L1, tr("Utility") }
+        { "Utility"_L1, tr("Utility") },
     };
 
     return categoryMap;

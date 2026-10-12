@@ -67,7 +67,7 @@ QString Ct::statusToString(Status status)
         { Downloading, tr("Downloading") },
         { Unpacking, tr("Unpacking") },
         { Installed, tr("Installed") },
-        { Unknown, tr("Unknown") }
+        { Unknown, tr("Unknown") },
     };
     if (statusMap.contains(status)) {
         return statusMap.value(status);

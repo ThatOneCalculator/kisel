@@ -9,7 +9,7 @@
 #include <QProgressBar>
 #include <QPushButton>
 
-#include "core/prefix/prefix.hpp"
+#include "core/prefixes/prefix.hpp"
 
 namespace kisel {
 class PrefixComponentsDialog : public QDialog {

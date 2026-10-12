@@ -54,7 +54,7 @@ AppPrefixesSettingsPage::AppPrefixesSettingsPage(AppSettings* settings, QWidget*
 
     m_sharedPrefixesDirResetButton->setIcon(QIcon::fromTheme("document-revert"));
     m_sharedPrefixesDirResetButton->setToolTip(tr("Restore the original path to prefixes"));
-    m_sharedPrefixesDirResetButton->setDisabled(m_settings->prefixesDir() == m_settings->appPrefixesDir());
+    m_sharedPrefixesDirResetButton->setDisabled(m_settings->prefixesDir() == AppSettings::appPrefixesDir());
     connect(m_sharedPrefixesDirResetButton, &QToolButton::clicked, this, &AppPrefixesSettingsPage::onPrefixesDirResetClicked);
     sharedPrefixesDirLayout->addWidget(m_sharedPrefixesDirResetButton);
 
@@ -88,7 +88,7 @@ void AppPrefixesSettingsPage::onPrefixesDirSelectClicked()
     if (!dirPath.isEmpty()) {
         m_settings->setPrefixesDir(dirPath);
         m_sharedPrefixesDirLineEdit->setText(dirPath);
-        m_sharedPrefixesDirResetButton->setDisabled(dirPath == m_settings->appPrefixesDir());
+        m_sharedPrefixesDirResetButton->setDisabled(dirPath == AppSettings::appPrefixesDir());
         PREFIX_MODEL->refreshList();
     }
 }

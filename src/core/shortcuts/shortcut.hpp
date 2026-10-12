@@ -7,7 +7,7 @@
 namespace kisel {
 enum ShortcutLocation {
     Desktop = 0x1,
-    Menu = 0x2
+    Menu = 0x2,
 };
 Q_DECLARE_FLAGS(ShortcutLocations, ShortcutLocation)
 

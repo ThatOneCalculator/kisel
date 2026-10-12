@@ -2,7 +2,7 @@
 
 #include <QWidget>
 
-#include "core/prefix/prefix.hpp"
+#include "core/prefixes/prefix.hpp"
 
 namespace kisel {
 class PrefixSettingsWindow : public QWidget {

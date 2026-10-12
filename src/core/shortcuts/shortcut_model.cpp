@@ -54,7 +54,7 @@ QHash<int, QByteArray> ShortcutModel::roleNames() const
         { PathRole, "path" },
         { ExeFileRole, "exeFile" },
         { PrefixRole, "prefix" },
-        { LocationRole, "location" }
+        { LocationRole, "location" },
     };
 
     return roles;
@@ -89,7 +89,8 @@ QVariant ShortcutModel::data(const QModelIndex& index, int role) const
     case Qt::DecorationRole:
         if (column == NameColumn) {
             return shortcut->icon();
-        } else if (column == LocationColumn) {
+        }
+        if (column == LocationColumn) {
             return isDesktopShortcut ? QIcon::fromTheme("user-desktop-symbolic") : QIcon::fromTheme("start-here-symbolic");
         }
         return { };
@@ -219,13 +220,13 @@ void ShortcutModel::createShortcut(
             return;
         }
 
+        if (!file.setPermissions(file.permissions() | QFile::ExeUser)) {
+            qWarning() << "Failed to make .desktop file executable:" << file.errorString();
+        }
+
         if (!file.commit()) {
             qCritical() << "Failed to save changes to the file:" << file.errorString();
             return;
-        }
-
-        if (!file.setPermissions(file.permissions() | QFileDevice::ExeUser)) {
-            qWarning() << "Failed to make .desktop file executable:" << file.errorString();
         }
 
         Shortcut* sh = shortcut(exeFile->id(), i.key());

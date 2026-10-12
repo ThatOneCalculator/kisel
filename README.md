@@ -15,15 +15,18 @@ Efficient launch of Windows programs
 ![Fedora](https://img.shields.io/badge/Fedora-294172?style=for-the-badge&logo=fedora&logoColor=white)
 
 ## Project goal 🚩
-Provide an instant-run exe file program in a compiled language with minimal dependencies, without turning it into yet another launcher with multiple menus for adding a exe with its own specific game library. Just select the exe and run. And to save the exe file launcher, use the built-in desktop shortcut feature
+Provide an instant-run exe file program in a compiled language with minimal dependencies, without turning it into yet another launcher with multiple menus for adding a exe with its own specific game library. Just select the exe and run. And to save the exe file launcher, use the built-in desktop shortcut feature.
 
 ## Highlights 🍒
 - C++ code and minimal actions to run exe
 - Launching games without Steam using [umu-launcher](https://github.com/Open-Wine-Components/umu-launcher)
 - Compatibility with the Steam environment
-- Configuring and managing prefixes
+- Using different types of prefixes:
+  - **Shared** - from the general list
+  - **Individual** - based on the path to the executable file
+  - **Portable** - creates a `.kisel-prefix` next to the executable file
 - Compatibility Tools Download Menu
-- Desktop shortcuts
+- Desktop shortcuts (Menu, Desktop)
 - Installing additional prefix dlls
 - WOW64 by default and no 32-bit dependencies
 - OnlineFix Support (Disabled by default)
@@ -34,6 +37,7 @@ Provide an instant-run exe file program in a compiled language with minimal depe
     - Runtime auto-update
     - Using Steam or umu-launcher
     - MangoHud
+    - Gamescope (Flatpak is not supported)
     - OBS Vulkan Game Capture
     - Xalia
     - NVAPI
@@ -77,6 +81,7 @@ sudo dnf install ./kisel-*.rpm
 - **Make dependencies:**
   - cmake
   - qt6-tools
+  - vulkan-headers
 - **Optional dependencies:**
   - winetricks
   - mangohud

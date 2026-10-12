@@ -13,7 +13,6 @@
 
 #include "core/app/app.hpp"
 #include "core/compatibilitytools/ct_model.hpp"
-#include "core/prefix/prefix.hpp"
 #include "core/settings/app_settings.hpp"
 #include "ui/aboutapp/about_app_dialog.hpp"
 #include "ui/appsettings/app_settings_window.hpp"

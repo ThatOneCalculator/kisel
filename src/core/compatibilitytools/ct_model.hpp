@@ -14,13 +14,13 @@ public:
         NameRole = Qt::UserRole + 1,
         PathRole,
         StatusRole,
-        ProgressRole
+        ProgressRole,
     };
     Q_ENUM(Roles);
 
     enum Columns {
         NameColumn = 0,
-        StatusColumn = 1
+        StatusColumn = 1,
     };
     Q_ENUM(Columns)
 

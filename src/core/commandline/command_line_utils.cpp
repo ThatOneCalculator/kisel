@@ -3,7 +3,7 @@
 #include <QCommandLineParser>
 
 #include "core/app/app.hpp"
-#include "core/prefix/prefix.hpp"
+#include "core/prefixes/prefix.hpp"
 
 using namespace kisel;
 

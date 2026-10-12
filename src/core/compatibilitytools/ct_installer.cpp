@@ -59,11 +59,9 @@ void CtInstallProcess::extractCt()
     tempArchive->close();
     tempArchive->deleteLater();
 
-    if (!ct->exists()) {
-        if (!ct->dir().mkpath(".")) {
-            emit finished(false, tr("Cannot create directory: %1").arg(ct->path()));
-            return;
-        }
+    if (!ct->exists() && !ct->dir().mkpath(".")) {
+        emit finished(false, tr("Cannot create directory: %1").arg(ct->path()));
+        return;
     }
 
     tarProcess->setWorkingDirectory(ct->path());
@@ -114,7 +112,7 @@ const QMap<QString, QUrl>& CtInstaller::ctSourceMap()
 {
     static QMap<QString, QUrl> map {
         { "Proton-GE (Github)"_L1, QUrl("https://api.github.com/repos/GloriousEggroll/proton-ge-custom/releases?per_page=10"_L1) },
-        { "Proton-CachyOS (Github)"_L1, QUrl("https://api.github.com/repos/CachyOS/proton-cachyos/releases?per_page=10"_L1) }
+        { "Proton-CachyOS (Github)"_L1, QUrl("https://api.github.com/repos/CachyOS/proton-cachyos/releases?per_page=10"_L1) },
     };
     return map;
 }
@@ -129,7 +127,7 @@ void CtInstaller::fetchReleases(const QString& sourceName, QObject* requester)
     request.setHeader(QNetworkRequest::UserAgentHeader, "kisel"_L1);
     QNetworkReply* reply = m_networkManager.get(request);
 
-    connect(reply, &QNetworkReply::finished, this, [this, reply, requester]() {
+    connect(reply, &QNetworkReply::finished, this, [this, reply, requester] {
         if (reply->error() != QNetworkReply::NoError) {
             emit releasesLoaded(requester, { }, false, reply->errorString());
             reply->deleteLater();
@@ -149,23 +147,21 @@ void CtInstaller::fetchReleases(const QString& sourceName, QObject* requester)
     });
 }
 
-void CtInstaller::addToInstallation(const QString& name, const QUrl& url, const QString& installRootPath)
+void CtInstaller::addToInstallation(const QString& name, const QUrl& url, const QString& installDir)
 {
-    if (name.isEmpty() || url.isEmpty() || installRootPath.isEmpty()) {
+    if (name.isEmpty() || url.isEmpty() || installDir.isEmpty()) {
         return;
     }
 
-    if (!CTS_DIR_LIST.contains(installRootPath)) {
-        emit installationError(tr("No suitable installation path specified: %1").arg(installRootPath));
+    if (!CTS_DIR_LIST.contains(installDir)) {
+        emit installationError(tr("No suitable installation path specified: %1").arg(installDir));
         return;
     }
 
-    QDir installRootDir(installRootPath);
-    if (!installRootDir.exists()) {
-        if (!installRootDir.mkpath(".")) {
-            emit installationError(tr("Cannot create directory: %1").arg(installRootPath));
-            return;
-        }
+    QDir installRootDir(installDir);
+    if (!installRootDir.exists() && !installRootDir.mkpath(".")) {
+        emit installationError(tr("Cannot create directory: %1").arg(installDir));
+        return;
     }
 
     QNetworkRequest request(url);
@@ -219,14 +215,7 @@ QString CtInstaller::deviceArchitecture()
 bool CtInstaller::deviceHasV3Exstensions()
 {
     static QString arch = deviceArchitecture();
-
-    if (arch == "x86_64"_L1) {
-        if (__builtin_cpu_supports("avx2") && __builtin_cpu_supports("fma") && __builtin_cpu_supports("bmi2")) {
-            return true;
-        }
-    }
-
-    return false;
+    return arch == "x86_64"_L1 && __builtin_cpu_supports("avx2") && __builtin_cpu_supports("fma") && __builtin_cpu_supports("bmi2");
 }
 
 QString CtInstaller::getBaseArchitectureNameFromAsset(const QString& assetName)

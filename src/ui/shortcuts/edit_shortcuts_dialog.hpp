@@ -7,7 +7,7 @@
 #include <QToolButton>
 
 #include "core/executablefile/executable_file.hpp"
-#include "core/prefix/prefix.hpp"
+#include "core/prefixes/prefix.hpp"
 #include "core/shortcuts/shortcut.hpp"
 
 namespace kisel {
@@ -15,7 +15,7 @@ class EditShortcutsDialog : public QDialog {
     Q_OBJECT
 
 public:
-    EditShortcutsDialog(const QString& exeFilePath, Prefix* prefix = nullptr, QWidget* parent = nullptr);
+    explicit EditShortcutsDialog(const QString& exeFilePath, Prefix* prefix = nullptr, QWidget* parent = nullptr);
 
 private slots:
     void onAccepted();
