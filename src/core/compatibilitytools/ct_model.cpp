@@ -2,7 +2,7 @@
 
 #include <QTemporaryFile>
 
-#include "core/appsettings/app_settings.hpp"
+#include "core/settings/app_settings.hpp"
 
 using namespace Qt::StringLiterals;
 using namespace kisel;
@@ -72,7 +72,7 @@ QHash<int, QByteArray> CtModel::roleNames() const
         { NameRole, "name" },
         { PathRole, "path" },
         { StatusRole, "status" },
-        { ProgressRole, "progress" }
+        { ProgressRole, "progress" },
     };
 
     return roles;
@@ -113,7 +113,7 @@ bool CtModel::removeRows(int row, int count, const QModelIndex& parent)
     return true;
 }
 
-int CtModel::ctIndex(Ct* ct) const
+int CtModel::indexOf(Ct* ct) const
 {
     if (ct == nullptr) {
         return -1;
@@ -122,7 +122,7 @@ int CtModel::ctIndex(Ct* ct) const
     return static_cast<int>(m_cts.indexOf(ct));
 }
 
-Ct* CtModel::forIndex(int index) const
+Ct* CtModel::getByIndex(int index) const
 {
     if (index >= 0 && index < m_cts.count()) {
         return m_cts.at(index);
@@ -131,7 +131,7 @@ Ct* CtModel::forIndex(int index) const
     return nullptr;
 }
 
-Ct* CtModel::forPath(QStringView path) const
+Ct* CtModel::getByPath(QStringView path) const
 {
     if (path.isEmpty()) {
         return nullptr;
@@ -199,9 +199,9 @@ bool CtModel::containsPath(QStringView path)
 
 Ct* CtModel::defaultCt()
 {
-    const QString defaultCtPath = APP_SETTINGS->defaultCtPath();
+    const QString defaultCtPath = APP_SETTINGS->ctPath();
     if (!defaultCtPath.isEmpty() && QFileInfo::exists(defaultCtPath)) {
-        return forPath(defaultCtPath);
+        return getByPath(defaultCtPath);
     }
 
     if (!m_cts.isEmpty()) {
@@ -220,7 +220,7 @@ void CtModel::setCtDownloadProgress(Ct* ct, qint64 bytesReceived, qint64 bytesTo
         }
 
         ct->setProgress(percentage);
-        QModelIndex modelIndex = index(ctIndex(ct), 1);
+        QModelIndex modelIndex = index(indexOf(ct), 1);
         emit dataChanged(modelIndex, modelIndex, { ProgressRole });
     }
 }
@@ -228,7 +228,7 @@ void CtModel::setCtDownloadProgress(Ct* ct, qint64 bytesReceived, qint64 bytesTo
 void CtModel::setCtStatus(Ct* ct, Ct::Status status)
 {
     ct->setStatus(status);
-    QModelIndex modelIndex = index(ctIndex(ct), 1);
+    QModelIndex modelIndex = index(indexOf(ct), 1);
     emit dataChanged(modelIndex, modelIndex, { Qt::DisplayRole, StatusRole });
 }
 

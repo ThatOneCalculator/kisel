@@ -64,24 +64,24 @@ void CtListWidget::onContextMenuRequested(const QPoint& pos)
         return;
     }
 
-    Ct* ct = CT_MODEL->forIndex(index.row());
+    Ct* ct = CT_MODEL->getByIndex(index.row());
 
     QMenu menu(this);
 
     const Ct::Status status = ct->status();
     if (status == Ct::Installed) {
         QAction* openAction = menu.addAction(QIcon::fromTheme("document-open-folder"), tr("Open in files"));
-        connect(openAction, &QAction::triggered, this, [ct]() { QDesktopServices::openUrl(QUrl::fromLocalFile(ct->path())); });
+        connect(openAction, &QAction::triggered, this, [ct] { QDesktopServices::openUrl(QUrl::fromLocalFile(ct->path())); });
 
         QAction* deleteAction = menu.addAction(QIcon::fromTheme("entry-delete"), tr("Delete"));
-        connect(deleteAction, &QAction::triggered, this, [this, ct, index]() {
+        connect(deleteAction, &QAction::triggered, this, [this, ct, index] {
             if (QMessageBox::question(this, tr("Confirmation required"), tr("Delete \"%1\"?").arg(ct->name())) == QMessageBox::Yes) {
                 CT_MODEL->removeRow(index.row());
             }
         });
     } else if (status == Ct::Downloading || status == Ct::Unpacking) {
         QAction* stopAction = menu.addAction(QIcon::fromTheme("media-playback-stop"), tr("Cancel"));
-        connect(stopAction, &QAction::triggered, this, [this, ct]() {
+        connect(stopAction, &QAction::triggered, this, [this, ct] {
             auto answer = QMessageBox::question(this, tr("Confirmation required"), tr("Cancel the installation process of \"%1\"?").arg(ct->name()));
             if (answer == QMessageBox::Yes) {
                 CT_INSTALLER->cancelInstallation(ct);

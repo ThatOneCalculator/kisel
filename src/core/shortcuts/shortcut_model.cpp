@@ -7,7 +7,7 @@
 #include <QSaveFile>
 #include <utility>
 
-#include "core/appsettings/app_settings.hpp"
+#include "core/settings/app_settings.hpp"
 #include "core/shortcuts/shortcut.hpp"
 
 using namespace Qt::StringLiterals;
@@ -54,7 +54,7 @@ QHash<int, QByteArray> ShortcutModel::roleNames() const
         { PathRole, "path" },
         { ExeFileRole, "exeFile" },
         { PrefixRole, "prefix" },
-        { LocationRole, "location" }
+        { LocationRole, "location" },
     };
 
     return roles;
@@ -89,7 +89,8 @@ QVariant ShortcutModel::data(const QModelIndex& index, int role) const
     case Qt::DecorationRole:
         if (column == NameColumn) {
             return shortcut->icon();
-        } else if (column == LocationColumn) {
+        }
+        if (column == LocationColumn) {
             return isDesktopShortcut ? QIcon::fromTheme("user-desktop-symbolic") : QIcon::fromTheme("start-here-symbolic");
         }
         return { };
@@ -100,7 +101,7 @@ QVariant ShortcutModel::data(const QModelIndex& index, int role) const
     case ExeFileRole:
         return shortcut->exeFilePath();
     case PrefixRole:
-        return shortcut->prefixName();
+        return shortcut->prefixPath();
     case LocationRole:
         return shortcut->location();
     default:
@@ -164,7 +165,13 @@ void ShortcutModel::createShortcut(
         shortcutName = exeFile->baseName();
     }
 
-    const QString escapedPrefixName = escapeExecArg(prefix->name());
+    QString escapedPrefixValue;
+    if (prefix->path().startsWith(APP_SETTINGS->prefixesDir().absolutePath())) {
+        escapedPrefixValue = escapeExecArg(prefix->name());
+    } else {
+        escapedPrefixValue = escapeExecArg(prefix->path());
+    }
+
     const QString escapedExePath = escapeExecArg(exeFile->path());
 
     QByteArray data;
@@ -173,10 +180,10 @@ void ShortcutModel::createShortcut(
     data += "Name="_ba % shortcutName.toUtf8() % u'\n';
     if (APP_SETTINGS->isFlatpak()) {
         data += "Exec=flatpak run --file-forwarding io.github.seinedkoda.kisel -p \""_ba
-            % escapedPrefixName.toUtf8() % "\" @@ \""_ba
+            % escapedPrefixValue.toUtf8() % "\" @@ \""_ba
             % escapedExePath.toUtf8() % "\" @@\n"_ba;
     } else {
-        data += "Exec=kisel -p \""_ba % escapedPrefixName.toUtf8() % "\" \""_ba % escapedExePath.toUtf8() % "\"\n"_ba;
+        data += "Exec=kisel -p \""_ba % escapedPrefixValue.toUtf8() % "\" \""_ba % escapedExePath.toUtf8() % "\"\n"_ba;
     }
     data += "Icon="_ba % iconPath.toUtf8() % u'\n';
     data += "Categories="_ba % category.toUtf8() % ";\n"_ba;
@@ -187,7 +194,7 @@ void ShortcutModel::createShortcut(
 
     static QMap<ShortcutLocation, QDir> dirMap {
         { ShortcutLocation::Desktop, Shortcut::desktopShortcutsDir() },
-        { ShortcutLocation::Menu, Shortcut::menuShortcutsDir() }
+        { ShortcutLocation::Menu, Shortcut::menuShortcutsDir() },
     };
 
     for (auto i = dirMap.cbegin(), end = dirMap.cend(); i != end; ++i) {
@@ -213,13 +220,13 @@ void ShortcutModel::createShortcut(
             return;
         }
 
+        if (!file.setPermissions(file.permissions() | QFile::ExeUser)) {
+            qWarning() << "Failed to make .desktop file executable:" << file.errorString();
+        }
+
         if (!file.commit()) {
             qCritical() << "Failed to save changes to the file:" << file.errorString();
             return;
-        }
-
-        if (!file.setPermissions(file.permissions() | QFileDevice::ExeUser)) {
-            qWarning() << "Failed to make .desktop file executable:" << file.errorString();
         }
 
         Shortcut* sh = shortcut(exeFile->id(), i.key());

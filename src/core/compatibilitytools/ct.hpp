@@ -13,7 +13,7 @@ public:
         Downloading,
         Unpacking,
         Installed,
-        Unknown
+        Unknown,
     };
     Q_ENUM(Status);
 

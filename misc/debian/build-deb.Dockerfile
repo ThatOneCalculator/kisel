@@ -5,7 +5,8 @@ RUN apt update && apt install -y \
     g++ \
     ninja-build \
     qt6-base-dev \
-    qt6-tools-dev
+    qt6-tools-dev \
+    libvulkan-dev
 
 COPY . /src
 WORKDIR /src

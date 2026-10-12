@@ -2,11 +2,10 @@
 
 #include <QObject>
 #include <QPointer>
-#include <QProcessEnvironment>
 
 #include "core/compatibilitytools/ct.hpp"
 #include "core/executablefile/executable_file.hpp"
-#include "core/prefix/prefix.hpp"
+#include "core/prefixes/prefix.hpp"
 
 namespace kisel {
 class RunConfig : public QObject {
@@ -20,18 +19,19 @@ public:
     [[nodiscard]] QString exePath() const;
     [[nodiscard]] QString exeName() const;
     [[nodiscard]] const QIcon& exeIcon() const;
+    [[nodiscard]] bool exeIsValid() const;
     void setPrefix(Prefix* prefix);
     [[nodiscard]] Prefix* prefix() const;
+    [[nodiscard]] PrefixSettings* prefixSettings() const;
+    [[nodiscard]] bool prefixIsValid() const;
     void setCt(Ct* ct);
     [[nodiscard]] Ct* ct() const;
-    QProcessEnvironment& setNewEnv();
-    QProcessEnvironment& env();
+    [[nodiscard]] QString workingDirPath() const;
     [[nodiscard]] bool isUsingSteam() const;
 
 private:
     ExecutableFile* m_exeFile;
     QPointer<Prefix> m_prefix;
     QPointer<Ct> m_ct;
-    QProcessEnvironment m_env;
 };
 }

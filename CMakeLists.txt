@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.19)
-project(Kisel VERSION 1.4.1 LANGUAGES CXX)
+project(Kisel VERSION 1.5.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -51,6 +51,8 @@ target_link_libraries(kisel
     Qt::Widgets
     Qt::Network
 )
+
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/packages)
 
 install(TARGETS kisel
     BUNDLE  DESTINATION .
@@ -111,13 +113,13 @@ set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${CM
 set(CPACK_RPM_PACKAGE_ARCHITECTURE "x86_64")
 set(CPACK_RPM_PACKAGE_REQUIRES "qt6-qtbase, icoutils, python3")
 set(CPACK_RPM_PACKAGE_RECOMMENDS "mangohud")
-set(CPACK_RPM_PACKAGE_SUGGESTS "winetricks, obs-studio-plugin-vkcapture")
+set(CPACK_RPM_PACKAGE_SUGGESTS "winetricks, obs-studio-plugin-vkcapture, gamescope")
 
 # .deb (cpack -G DEB)
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt6widgets6, icoutils, python3")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt6widgets6, icoutils, python3, libvulkan-dev")
 set(CPACK_DEBIAN_PACKAGE_RECOMMENDS "mangohud")
-set(CPACK_DEBIAN_PACKAGE_SUGGESTS "winetricks, obs-vkcapture")
+set(CPACK_DEBIAN_PACKAGE_SUGGESTS "winetricks, obs-vkcapture, gamescope")
 set(CPACK_DEBIAN_PACKAGE_SECTION "utils")
 set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
 

@@ -1,12 +1,12 @@
 #pragma once
 
 #include <QAbstractTableModel>
+#include <QCollator>
 #include <QIcon>
 #include <QSortFilterProxyModel>
-#include <QCollator>
 
 #include "core/executablefile/executable_file.hpp"
-#include "core/prefix/prefix.hpp"
+#include "core/prefixes/prefix.hpp"
 #include "core/shortcuts/shortcut.hpp"
 
 namespace kisel {
@@ -19,13 +19,13 @@ public:
         PathRole,
         ExeFileRole,
         PrefixRole,
-        LocationRole
+        LocationRole,
     };
     Q_ENUM(Roles)
 
     enum Columns {
         NameColumn = 0,
-        LocationColumn = 1
+        LocationColumn = 1,
     };
     Q_ENUM(Columns)
 
