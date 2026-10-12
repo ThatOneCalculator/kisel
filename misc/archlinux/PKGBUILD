@@ -1,6 +1,6 @@
 # Maintainer: Seined Koda <seinedk@gmail.com>
 pkgname=kisel
-pkgver=1.4.1
+pkgver=1.5.0
 pkgrel=1
 pkgdesc="Efficient launch of Windows programs"
 arch=('x86_64')
@@ -29,7 +29,7 @@ makedepends=(
 )
 
 source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz")
-sha256sums=('73a9970ace96de3901561c98d9e939f0b359e7f3cd1b1c792e11bf666eec6622')
+sha256sums=('04b6b79d49be9598739c5a1d38d56fc9a20de48e941289077609faea1554a547')
 
 build() {
   cmake -B build -S "${pkgname}-${pkgver}" \
