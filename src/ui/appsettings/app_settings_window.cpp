@@ -6,9 +6,9 @@
 #include <QStackedWidget>
 
 #include "ui/settingspages/app_general_settings_page.hpp"
-#include "ui/settingspages/app_platform_settings_page.hpp"
 #include "ui/settingspages/app_prefixes_settings_page.hpp"
 #include "ui/settingspages/compatibility_settings_page.hpp"
+#include "ui/settingspages/platform_settings_page.hpp"
 #include "ui/settingspages/run_settings_page.hpp"
 #include "ui/settingspages/services_settings_page.hpp"
 #include "ui/shortcuts/shortcuts_list_widget.hpp"
@@ -69,7 +69,7 @@ AppSettingsWindow::AppSettingsWindow(QWidget* parent)
     new QListWidgetItem(QIcon::fromTheme("media-playback-start"), tr("Launch"), pageListView);
     stackedPages->addWidget(runPage);
 
-    auto* platformPage = new AppPlatformSettingsPage(APP_SETTINGS, this);
+    auto* platformPage = new PlatformSettingsPage(APP_SETTINGS, this);
     platformPage->layout()->setContentsMargins(0, 0, 0, 0);
     new QListWidgetItem(QIcon::fromTheme("computer-symbolic"), tr("Platform"), pageListView);
     stackedPages->addWidget(platformPage);

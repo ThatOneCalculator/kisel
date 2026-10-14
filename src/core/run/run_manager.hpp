@@ -58,6 +58,7 @@ private:
     static QProcessEnvironment setupEnv(RunConfig* config);
     bool setupProcess(RunConfig* config, const QStringList& runnerCommandParts, QProcessEnvironment& env, const QStringList& args = { });
     static QStringList setupProtonCommand(RunConfig* config, QProcessEnvironment& env);
+    static QStringList setupFlatpakSpawnCommand(const QProcessEnvironment& env);
     QStringList setupUmuCommand(RunConfig* config, QProcessEnvironment& env);
     void setupExeProcessLogging(RunConfig* config);
     void runWinetricks(Prefix* prefix, const QStringList& args, const QString& taskName = { }, WinetricksCallback callback = { });

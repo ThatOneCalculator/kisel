@@ -13,9 +13,9 @@
 using namespace Qt::StringLiterals;
 using namespace kisel;
 
-PlatformSettingsPage::PlatformSettingsPage(PrefixSettings* prefixSettings, QWidget* parent)
+PlatformSettingsPage::PlatformSettingsPage(BaseSettings* baseSettings, QWidget* parent)
     : QWidget(parent)
-    , m_settings(prefixSettings)
+    , m_settings(baseSettings)
 {
     auto* layout = new QVBoxLayout(this);
 
@@ -36,54 +36,58 @@ PlatformSettingsPage::PlatformSettingsPage(PrefixSettings* prefixSettings, QWidg
     });
     umuBoxLayout->addWidget(steamEnvCheckBox);
 
-    auto* bottomSteamEnvLine = new QFrame(this);
-    bottomSteamEnvLine->setFrameShape(QFrame::HLine);
-    umuBoxLayout->addWidget(bottomSteamEnvLine);
+    if (m_settings != APP_SETTINGS) {
+        auto* bottomSteamEnvLine = new QFrame(this);
+        bottomSteamEnvLine->setFrameShape(QFrame::HLine);
+        umuBoxLayout->addWidget(bottomSteamEnvLine);
 
-    auto* openOnlineDB = new QLabel(tr("<a href=https://umu.openwinecomponents.org>Online database</a>"), this);
-    openOnlineDB->setToolTip(tr("Database for finding game fixes\n(https://umu.openwinecomponents.org)"));
-    openOnlineDB->setOpenExternalLinks(true);
-    umuBoxLayout->addWidget(openOnlineDB);
+        auto* openOnlineDB = new QLabel(tr("<a href=https://umu.openwinecomponents.org>Online database</a>"), this);
+        openOnlineDB->setToolTip(tr("Database for finding game fixes\n(https://umu.openwinecomponents.org)"));
+        openOnlineDB->setOpenExternalLinks(true);
+        umuBoxLayout->addWidget(openOnlineDB);
 
-    auto* gameIdLabel = new QLabel(tr("Game ID"), this);
-    umuBoxLayout->addWidget(gameIdLabel);
+        auto* gameIdLabel = new QLabel(tr("Game ID"), this);
+        umuBoxLayout->addWidget(gameIdLabel);
 
-    auto* gameIdEdit = new QLineEdit(this);
-    gameIdEdit->setPlaceholderText("umu-default");
-    gameIdEdit->setToolTip(tr("Determines the umu-id from the umu databases for games requiring fixes"));
-    gameIdEdit->setText(m_settings->gameId());
-    umuBoxLayout->addWidget(gameIdEdit);
+        auto* gameIdEdit = new QLineEdit(this);
+        gameIdEdit->setPlaceholderText("umu-default");
+        gameIdEdit->setToolTip(tr("Determines the umu-id from the umu databases for games requiring fixes"));
+        gameIdEdit->setText(m_settings->gameId());
+        umuBoxLayout->addWidget(gameIdEdit);
 
-    connect(gameIdEdit, &QLineEdit::textEdited, this, [this](const QString& text) {
-        m_settings->setGameId(text);
-    });
+        connect(gameIdEdit, &QLineEdit::textEdited, this, [this](const QString& text) {
+            m_settings->setGameId(text);
+        });
 
-    auto* storeLabel = new QLabel(tr("Store"), this);
-    umuBoxLayout->addWidget(storeLabel);
+        auto* storeLabel = new QLabel(tr("Store"), this);
+        umuBoxLayout->addWidget(storeLabel);
 
-    auto* storeWidget = new QWidget(this);
-    umuBoxLayout->addWidget(storeWidget);
+        auto* storeWidget = new QWidget(this);
+        umuBoxLayout->addWidget(storeWidget);
 
-    auto* storeLayout = new QHBoxLayout(storeWidget);
-    storeLayout->setContentsMargins(0, 0, 0, 0);
+        auto* storeLayout = new QHBoxLayout(storeWidget);
+        storeLayout->setContentsMargins(0, 0, 0, 0);
 
-    auto* storeComboBox = new QComboBox(this);
-    storeComboBox->setPlaceholderText(tr("None (Steam)"));
-    storeComboBox->setToolTip(tr("Determines which store to use to search for UMU fixes"));
-    storeComboBox->addItems(storeList());
-    storeComboBox->setCurrentText(m_settings->store());
-    storeLayout->addWidget(storeComboBox);
+        auto* storeComboBox = new QComboBox(this);
+        storeComboBox->setPlaceholderText(tr("None (Steam)"));
+        storeComboBox->setToolTip(tr("Determines which store to use to search for UMU fixes"));
+        storeComboBox->addItems(storeList());
+        storeComboBox->setCurrentText(m_settings->store());
+        storeLayout->addWidget(storeComboBox);
 
-    connect(storeComboBox, &QComboBox::currentIndexChanged, this, [this, storeComboBox] {
-        m_settings->setStore(storeComboBox->currentText());
-    });
+        connect(storeComboBox, &QComboBox::currentIndexChanged, this, [this, storeComboBox] {
+            m_settings->setStore(storeComboBox->currentText());
+        });
 
-    auto* clearStoreButton = new QToolButton(this);
-    clearStoreButton->setIcon(QIcon::fromTheme("edit-clear"));
-    connect(clearStoreButton, &QToolButton::clicked, this, [storeComboBox] {
-        storeComboBox->setCurrentIndex(-1);
-    });
-    storeLayout->addWidget(clearStoreButton);
+        auto* clearStoreButton = new QToolButton(this);
+        clearStoreButton->setIcon(QIcon::fromTheme("edit-clear"));
+        connect(clearStoreButton, &QToolButton::clicked, this, [storeComboBox] {
+            storeComboBox->setCurrentIndex(-1);
+        });
+        storeLayout->addWidget(clearStoreButton);
+    } else {
+        layout->setAlignment(Qt::AlignTop);
+    }
 
     auto* useSteamBox = new QGroupBox(tr("Use Steam %1").arg(APP_SETTINGS->isFlatpak() ? tr("(Kisel is a FLATPAK!)") : QString()), this);
     if (APP_SETTINGS->isFlatpak()) {
@@ -122,6 +126,34 @@ PlatformSettingsPage::PlatformSettingsPage(PrefixSettings* prefixSettings, QWidg
         m_settings->setSteamEnabled(checked);
         umuBox->setChecked(!checked);
     });
+
+    if (APP_SETTINGS->isFlatpak()) {
+        auto* topFlatpakPermissionLine = new QFrame(this);
+        topFlatpakPermissionLine->setFrameShape(QFrame::HLine);
+        steamLayout->addWidget(topFlatpakPermissionLine);
+
+        QPalette dangerPalette = palette();
+        dangerPalette.setColor(QPalette::WindowText, QColor(255, 36, 0));
+
+        auto* protonSandboxDisabledCheckBox = new QCheckBox(tr("Disable sandbox for Proton (DANGEROUS!!!)"), this);
+        protonSandboxDisabledCheckBox->setToolTip(tr("Allows running Proton outside the sandbox"));
+        protonSandboxDisabledCheckBox->setChecked(m_settings->protonSandboxDisabled());
+        connect(protonSandboxDisabledCheckBox, &QCheckBox::clicked, this, [this](bool checked) {
+            m_settings->setProtonSandboxDisabled(checked);
+        });
+        protonSandboxDisabledCheckBox->setPalette(dangerPalette);
+        steamLayout->addWidget(protonSandboxDisabledCheckBox);
+
+        auto* flatpakPermissionLabel = new QLabel(tr("Permission is required, run the command below:"), this);
+        flatpakPermissionLabel->setPalette(dangerPalette);
+        steamLayout->addWidget(flatpakPermissionLabel);
+
+        auto* flatpakPermissionTextLine = new QLineEdit("flatpak override --user --talk-name=org.freedesktop.Flatpak io.github.seinedkoda.kisel"_L1, this);
+        flatpakPermissionTextLine->setCursorPosition(0);
+        flatpakPermissionTextLine->setReadOnly(true);
+        flatpakPermissionTextLine->setPalette(dangerPalette);
+        steamLayout->addWidget(flatpakPermissionTextLine);
+    }
 }
 
 const QStringList& PlatformSettingsPage::storeList()

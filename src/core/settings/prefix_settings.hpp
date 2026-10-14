@@ -31,14 +31,12 @@ public:
     [[nodiscard]] bool openglEnabled() const override;
 
     // Platform
-    void setGameId(const QString& gameId);
-    [[nodiscard]] QString gameId() const;
-    void setStore(const QString& store);
-    [[nodiscard]] QString store() const;
     [[nodiscard]] bool steamEnabled() const override;
     [[nodiscard]] bool steamEnvEnabled() const override;
     [[nodiscard]] bool steamOverlayEnabled() const override;
     [[nodiscard]] bool onlineFixEnabled() const override;
+    // Platform/Flatpak
+    [[nodiscard]] bool protonSandboxDisabled() const override;
 
 private:
     AppSettings* m_appSettings;

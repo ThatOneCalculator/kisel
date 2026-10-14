@@ -66,19 +66,12 @@ bool RunManager::setupProcess(RunConfig* config, const QStringList& runnerComman
 
     const PrefixSettings* prefixSettings = config->prefixSettings();
 
-    env.insert("WINEPREFIX"_L1, config->prefix()->path());
-    env.insert("MANGOHUD"_L1, prefixSettings->mangoHudEnabled() ? Y : N);
-    env.insert("OBS_VKCAPTURE"_L1, prefixSettings->obsVkCaptureEnabled() ? Y : N);
-    env.insert("PROTON_USE_XALIA"_L1, prefixSettings->xaliaEnabled() ? Y : N);
-    env.insert("PROTON_ENABLE_WAYLAND"_L1, prefixSettings->waylandEnabled() ? Y : N);
-    env.insert("PROTON_USE_WOW64"_L1, prefixSettings->wow64Enabled() ? Y : N);
-    env.insert("PROTON_ENABLE_HDR"_L1, prefixSettings->hdrEnabled() ? Y : N);
-    env.insert("PROTON_USE_WINED3D"_L1, prefixSettings->openglEnabled() ? Y : N);
-    env.insert("PROTON_ENABLE_NVAPI"_L1, prefixSettings->nvapiEnabled() ? Y : N);
-    env.insert("PROTON_USE_SDL"_L1, prefixSettings->sdlInputEnabled() ? Y : N);
-
     QStringList fullCommandParts;
     QStringList baseCommandParts;
+
+    if (APP_SETTINGS->isFlatpak() && config->isUsingSteam() && prefixSettings->protonSandboxDisabled()) {
+        fullCommandParts << setupFlatpakSpawnCommand(env);
+    }
 
     const QString& gamescopePath = APP_SETTINGS->gamescopePath();
     if (prefixSettings->gamescopeEnabled() && !gamescopePath.isEmpty()) {
@@ -91,19 +84,22 @@ bool RunManager::setupProcess(RunConfig* config, const QStringList& runnerComman
     const qsizetype commandIdx = customRunCommandParts.indexOf("%command%"_L1);
 
     if (commandIdx < 0) {
-        fullCommandParts = baseCommandParts;
+        fullCommandParts << baseCommandParts;
     } else {
         QStringList leftCustomRunCommand = customRunCommandParts.mid(0, commandIdx);
         QStringList rightCustomRunCommand = customRunCommandParts.mid(commandIdx + 1);
-        fullCommandParts = leftCustomRunCommand << baseCommandParts << rightCustomRunCommand;
+        fullCommandParts << leftCustomRunCommand << baseCommandParts << rightCustomRunCommand;
     }
 
     m_fullCommandString = fullCommandParts.join(u' ');
     QString program = fullCommandParts.takeFirst();
 
+    QProcessEnvironment fullEnv = QProcessEnvironment::systemEnvironment();
+    fullEnv.insert(env);
+
     m_process = new QProcess(this);
     m_process->setWorkingDirectory(config->workingDirPath());
-    m_process->setProcessEnvironment(env);
+    m_process->setProcessEnvironment(fullEnv);
     m_process->setProgram(program);
     m_process->setArguments(fullCommandParts);
 
@@ -158,12 +154,25 @@ bool RunManager::setupCt(RunConfig* config)
 
 QProcessEnvironment RunManager::setupEnv(RunConfig* config)
 {
-    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    QProcessEnvironment env;
+    PrefixSettings* prefixSettings = config->prefixSettings();
 
-    const QMap<QString, QVariant> map = config->prefixSettings()->envMap();
+    // Set user variables from settings
+    const QMap<QString, QVariant> map = prefixSettings->envMap();
     for (auto [key, value] : map.asKeyValueRange()) {
         env.insert(key, value.toString());
     }
+
+    env.insert("WINEPREFIX"_L1, config->prefix()->path());
+    env.insert("MANGOHUD"_L1, prefixSettings->mangoHudEnabled() ? Y : N);
+    env.insert("OBS_VKCAPTURE"_L1, prefixSettings->obsVkCaptureEnabled() ? Y : N);
+    env.insert("PROTON_USE_XALIA"_L1, prefixSettings->xaliaEnabled() ? Y : N);
+    env.insert("PROTON_ENABLE_WAYLAND"_L1, prefixSettings->waylandEnabled() ? Y : N);
+    env.insert("PROTON_USE_WOW64"_L1, prefixSettings->wow64Enabled() ? Y : N);
+    env.insert("PROTON_ENABLE_HDR"_L1, prefixSettings->hdrEnabled() ? Y : N);
+    env.insert("PROTON_USE_WINED3D"_L1, prefixSettings->openglEnabled() ? Y : N);
+    env.insert("PROTON_ENABLE_NVAPI"_L1, prefixSettings->nvapiEnabled() ? Y : N);
+    env.insert("PROTON_USE_SDL"_L1, prefixSettings->sdlInputEnabled() ? Y : N);
 
     return env;
 }
@@ -175,6 +184,7 @@ QStringList RunManager::setupProtonCommand(RunConfig* config, QProcessEnvironmen
     }
 
     const Prefix* prefix = config->prefix();
+    const PrefixSettings* prefixSettings = prefix->settings();
 
     // Set current language
     QString protonLocaleName = APP_SETTINGS->locale() % ".UTF-8"_L1;
@@ -186,7 +196,7 @@ QStringList RunManager::setupProtonCommand(RunConfig* config, QProcessEnvironmen
     env.insert("STEAM_COMPAT_CLIENT_INSTALL_PATH"_L1, steamDir.absolutePath());
     env.insert("STEAM_COMPAT_DATA_PATH"_L1, prefix->path());
 
-    if (prefix->settings()->steamOverlayEnabled()) {
+    if (prefixSettings->steamOverlayEnabled()) {
         const QString& steamOverlay32bit = steamDir.filePath("ubuntu12_32/gameoverlayrenderer.so"_L1);
         const QString& steamOverlay64bit = steamDir.filePath("ubuntu12_64/gameoverlayrenderer.so"_L1);
         env.insert("LD_PRELOAD"_L1, steamOverlay32bit % ":"_L1 % steamOverlay64bit);
@@ -205,12 +215,24 @@ QStringList RunManager::setupProtonCommand(RunConfig* config, QProcessEnvironmen
         }
     }
 
-    if (prefix->settings()->onlineFixEnabled()) {
+    if (prefixSettings->onlineFixEnabled()) {
         // Redefining DLLs for OnlineFix
         env.insert("WINEDLLOVERRIDES"_L1, "steam_api64=n;onlinefix64=n;winpixeventruntime=n,b"_L1);
     }
 
     return { config->ct()->dir().filePath("proton"_L1), "run"_L1, config->exePath() };
+}
+
+QStringList RunManager::setupFlatpakSpawnCommand(const QProcessEnvironment& env)
+{
+    QStringList flatpakSpawnCommandParts { "flatpak-spawn"_L1, "--host"_L1 };
+
+    const QStringList& envKeys = env.keys();
+    for (const QString& key : envKeys) {
+        flatpakSpawnCommandParts << QStringLiteral("--env=%1=%2").arg(key, env.value(key));
+    }
+
+    return flatpakSpawnCommandParts;
 }
 
 QStringList RunManager::setupUmuCommand(RunConfig* config, QProcessEnvironment& env)

@@ -96,26 +96,6 @@ bool PrefixSettings::openglEnabled() const
     return value("opengl"_L1, !deviceSupportsVulkan()).toBool();
 }
 
-void PrefixSettings::setGameId(const QString& gameId)
-{
-    setValue("gameId"_L1, gameId);
-}
-
-QString PrefixSettings::gameId() const
-{
-    return value("gameId"_L1).toString();
-}
-
-void PrefixSettings::setStore(const QString& store)
-{
-    setValue("store"_L1, store);
-}
-
-QString PrefixSettings::store() const
-{
-    return value("store"_L1).toString();
-}
-
 bool PrefixSettings::steamEnabled() const
 {
     return value("steam"_L1, m_appSettings->steamEnabled()).toBool();
@@ -134,4 +114,9 @@ bool PrefixSettings::steamOverlayEnabled() const
 bool PrefixSettings::onlineFixEnabled() const
 {
     return value("onlineFix"_L1, m_appSettings->onlineFixEnabled()).toBool();
+}
+
+bool PrefixSettings::protonSandboxDisabled() const
+{
+    return value("flatpak/disableProtonSandbox"_L1, m_appSettings->protonSandboxDisabled()).toBool();
 }

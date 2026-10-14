@@ -50,6 +50,10 @@ public:
     [[nodiscard]] virtual bool openglEnabled() const;
 
     // Plaform
+    void setGameId(const QString& gameId);
+    [[nodiscard]] QString gameId() const;
+    void setStore(const QString& store);
+    [[nodiscard]] QString store() const;
     void setSteamEnabled(bool enabled);
     [[nodiscard]] virtual bool steamEnabled() const;
     void setSteamEnvEnabled(bool enabled);
@@ -58,5 +62,8 @@ public:
     [[nodiscard]] virtual bool steamOverlayEnabled() const;
     void setOnlineFixEnabled(bool enabled);
     [[nodiscard]] virtual bool onlineFixEnabled() const;
+    // Platform/Flatpak
+    void setProtonSandboxDisabled(bool disabled);
+    [[nodiscard]] virtual bool protonSandboxDisabled() const;
 };
 }

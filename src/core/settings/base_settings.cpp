@@ -186,6 +186,26 @@ bool BaseSettings::openglEnabled() const
     return value("opengl"_L1, !deviceSupportsVulkan()).toBool();
 }
 
+void BaseSettings::setGameId(const QString& gameId)
+{
+    setValue("gameId"_L1, gameId);
+}
+
+QString BaseSettings::gameId() const
+{
+    return value("gameId"_L1).toString();
+}
+
+void BaseSettings::setStore(const QString& store)
+{
+    setValue("store"_L1, store);
+}
+
+QString BaseSettings::store() const
+{
+    return value("store"_L1).toString();
+}
+
 void BaseSettings::setSteamEnabled(bool enabled)
 {
     setValue("steam"_L1, enabled);
@@ -224,4 +244,14 @@ void BaseSettings::setOnlineFixEnabled(bool enabled)
 bool BaseSettings::onlineFixEnabled() const
 {
     return value("onlineFix"_L1, false).toBool();
+}
+
+void BaseSettings::setProtonSandboxDisabled(bool disabled)
+{
+    setValue("flatpak/disableProtonSandbox"_L1, disabled);
+}
+
+bool BaseSettings::protonSandboxDisabled() const
+{
+    return value("flatpak/disableProtonSandbox"_L1, false).toBool();
 }

@@ -1,7 +1,6 @@
 target_sources(kisel PRIVATE
     mainwindow/main_window.hpp mainwindow/main_window.cpp
     settingspages/app_general_settings_page.hpp settingspages/app_general_settings_page.cpp
-    settingspages/app_platform_settings_page.hpp settingspages/app_platform_settings_page.cpp
     settingspages/app_prefixes_settings_page.hpp settingspages/app_prefixes_settings_page.cpp
     settingspages/platform_settings_page.hpp settingspages/platform_settings_page.cpp
     settingspages/services_settings_page.hpp settingspages/services_settings_page.cpp

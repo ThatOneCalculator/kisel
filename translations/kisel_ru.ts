@@ -54,54 +54,6 @@
     </message>
 </context>
 <context>
-    <name>kisel::AppPlatformSettingsPage</name>
-    <message>
-        <location filename="../src/ui/settingspages/app_platform_settings_page.cpp" line="21"/>
-        <source>Don&apos;t use Steam</source>
-        <translation>Не использовать Steam</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/settingspages/app_platform_settings_page.cpp" line="22"/>
-        <source>Use umu-launcher to launch</source>
-        <translation>Использовать umu-launcher для запуска</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/settingspages/app_platform_settings_page.cpp" line="30"/>
-        <source>Steam Environment</source>
-        <translation>Окружение Steam</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/settingspages/app_platform_settings_page.cpp" line="31"/>
-        <source>Using the Steam environment for better compatibility with some games</source>
-        <translation>Использование окружения Steam для лучшей совместимости с некоторыми играми</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/settingspages/app_platform_settings_page.cpp" line="38"/>
-        <source>Use Steam %1</source>
-        <translation>Использовать Steam %1</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/settingspages/app_platform_settings_page.cpp" line="38"/>
-        <source>(Kisel is a FLATPAK!)</source>
-        <translation>(Кисель это FLATPAK!)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/settingspages/app_platform_settings_page.cpp" line="43"/>
-        <source>The Flatpak version of the program is being used, compatibility with Steam is not guaranteed!</source>
-        <translation>Используется Flatpak версия программы, совместимость со Steam не гарантируется!</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/settingspages/app_platform_settings_page.cpp" line="52"/>
-        <source>Steam Overlay</source>
-        <translation>Оверлей Steam</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/settingspages/app_platform_settings_page.cpp" line="59"/>
-        <source>Enable OnlineFix</source>
-        <translation>Включить OnlineFix</translation>
-    </message>
-</context>
-<context>
     <name>kisel::AppPrefixesSettingsPage</name>
     <message>
         <location filename="../src/ui/settingspages/app_prefixes_settings_page.cpp" line="25"/>
@@ -932,64 +884,79 @@ Priority:
         <translation>Использование окружения Steam для лучшей совместимости с некоторыми играми</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="43"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="44"/>
         <source>&lt;a href=https://umu.openwinecomponents.org&gt;Online database&lt;/a&gt;</source>
         <translation>&lt;a href=https://umu.openwinecomponents.org&gt;База данных онлайн&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="44"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="45"/>
         <source>Database for finding game fixes
 (https://umu.openwinecomponents.org)</source>
         <translation>База данных для поиска исправлений для игр
 (https://umu.openwinecomponents.org)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="48"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="49"/>
         <source>Game ID</source>
         <translation>Идентификатор игры</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="53"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="54"/>
         <source>Determines the umu-id from the umu databases for games requiring fixes</source>
         <translation>Определяет umu-id в базе данных umu для игр, требующих исправлений</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="61"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="62"/>
         <source>Store</source>
         <translation>Магазин</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="71"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="72"/>
         <source>None (Steam)</source>
         <translation>Нет (Steam)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="72"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="73"/>
         <source>Determines which store to use to search for UMU fixes</source>
         <translation>Определяет, какой магазин следует использовать для поиска исправлений UMU</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="88"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="92"/>
         <source>Use Steam %1</source>
         <translation>Использовать Steam %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="88"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="92"/>
         <source>(Kisel is a FLATPAK!)</source>
         <translation>(Кисель это FLATPAK!)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="93"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="97"/>
         <source>The Flatpak version of the program is being used, compatibility with Steam is not guaranteed!</source>
         <translation>Используется Flatpak версия программы, совместимость со Steam не гарантируется!</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="102"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="138"/>
+        <source>Disable sandbox for Proton (DANGEROUS!!!)</source>
+        <translation>Отключить песочницу для Proton (ОПАСНО!!!)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="139"/>
+        <source>Allows running Proton outside the sandbox</source>
+        <translation>Разрешает запуск Proton вне песочницы</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="147"/>
+        <source>Permission is required, run the command below:</source>
+        <translation>Требуется разрешение, запустите команду ниже:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="106"/>
         <source>Steam Overlay</source>
         <translation>Оверлей Steam</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="109"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="113"/>
         <source>Enable OnlineFix</source>
         <translation>Включить OnlineFix</translation>
     </message>
@@ -1259,17 +1226,17 @@ Priority:
 <context>
     <name>kisel::RunManager</name>
     <message>
-        <location filename="../src/core/run/run_manager.cpp" line="288"/>
+        <location filename="../src/core/run/run_manager.cpp" line="310"/>
         <source>Updating the component list</source>
         <translation>Обновление списка компонентов</translation>
     </message>
     <message>
-        <location filename="../src/core/run/run_manager.cpp" line="293"/>
+        <location filename="../src/core/run/run_manager.cpp" line="315"/>
         <source>Updating the list of installed components</source>
         <translation>Обновление списка установленных компонентов</translation>
     </message>
     <message>
-        <location filename="../src/core/run/run_manager.cpp" line="298"/>
+        <location filename="../src/core/run/run_manager.cpp" line="320"/>
         <source>Installing components</source>
         <translation>Установка компонентов</translation>
     </message>
