@@ -1,8 +1,10 @@
 #include "platform_settings_page.hpp"
 
 #include <QCheckBox>
+#include <QClipboard>
 #include <QComboBox>
 #include <QGroupBox>
+#include <QGuiApplication>
 #include <QLabel>
 #include <QLineEdit>
 #include <QToolButton>
@@ -144,15 +146,34 @@ PlatformSettingsPage::PlatformSettingsPage(BaseSettings* baseSettings, QWidget* 
         protonSandboxDisabledCheckBox->setPalette(dangerPalette);
         steamLayout->addWidget(protonSandboxDisabledCheckBox);
 
-        auto* flatpakPermissionLabel = new QLabel(tr("Permission is required, run the command below:"), this);
+        auto* flatpakPermissionLabel = new QLabel(tr("Permission is required, run the command below once:"), this);
         flatpakPermissionLabel->setPalette(dangerPalette);
         steamLayout->addWidget(flatpakPermissionLabel);
+
+        auto* flatpakPermissionWidget = new QWidget(this);
+        steamLayout->addWidget(flatpakPermissionWidget);
+
+        auto* flatpakPermissionLayout = new QHBoxLayout(flatpakPermissionWidget);
+        flatpakPermissionLayout->setContentsMargins(0, 0, 0, 0);
 
         auto* flatpakPermissionTextLine = new QLineEdit("flatpak override --user --talk-name=org.freedesktop.Flatpak io.github.seinedkoda.kisel"_L1, this);
         flatpakPermissionTextLine->setCursorPosition(0);
         flatpakPermissionTextLine->setReadOnly(true);
         flatpakPermissionTextLine->setPalette(dangerPalette);
-        steamLayout->addWidget(flatpakPermissionTextLine);
+        flatpakPermissionLayout->addWidget(flatpakPermissionTextLine);
+
+        // It's just works
+        QPalette normalPalette = palette();
+        normalPalette.setColor(QPalette::WindowText, palette().color(QPalette::WindowText));
+
+        auto* commandCopyButton = new QToolButton(this);
+        commandCopyButton->setIcon(QIcon::fromTheme("edit-copy"));
+        commandCopyButton->setToolTip(tr("Copy command"));
+        commandCopyButton->setPalette(normalPalette);
+        connect(commandCopyButton, &QToolButton::clicked, this, [flatpakPermissionTextLine] {
+            QGuiApplication::clipboard()->setText(flatpakPermissionTextLine->text());
+        });
+        flatpakPermissionLayout->addWidget(commandCopyButton);
     }
 }
 

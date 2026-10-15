@@ -864,99 +864,104 @@ Priority:
 <context>
     <name>kisel::PlatformSettingsPage</name>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="22"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="24"/>
         <source>Don&apos;t use Steam</source>
         <translation>Не использовать Steam</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="23"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="25"/>
         <source>Use umu-launcher to launch</source>
         <translation>Использовать umu-launcher для запуска</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="31"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="33"/>
         <source>Steam Environment</source>
         <translation>Окружение Steam</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="32"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="34"/>
         <source>Using the Steam environment for better compatibility with some games</source>
         <translation>Использование окружения Steam для лучшей совместимости с некоторыми играми</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="44"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="46"/>
         <source>&lt;a href=https://umu.openwinecomponents.org&gt;Online database&lt;/a&gt;</source>
         <translation>&lt;a href=https://umu.openwinecomponents.org&gt;База данных онлайн&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="45"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="47"/>
         <source>Database for finding game fixes
 (https://umu.openwinecomponents.org)</source>
         <translation>База данных для поиска исправлений для игр
 (https://umu.openwinecomponents.org)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="49"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="51"/>
         <source>Game ID</source>
         <translation>Идентификатор игры</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="54"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="56"/>
         <source>Determines the umu-id from the umu databases for games requiring fixes</source>
         <translation>Определяет umu-id в базе данных umu для игр, требующих исправлений</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="62"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="64"/>
         <source>Store</source>
         <translation>Магазин</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="72"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="74"/>
         <source>None (Steam)</source>
         <translation>Нет (Steam)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="73"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="75"/>
         <source>Determines which store to use to search for UMU fixes</source>
         <translation>Определяет, какой магазин следует использовать для поиска исправлений UMU</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="92"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="94"/>
         <source>Use Steam %1</source>
         <translation>Использовать Steam %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="92"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="94"/>
         <source>(Kisel is a FLATPAK!)</source>
         <translation>(Кисель это FLATPAK!)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="97"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="99"/>
         <source>The Flatpak version of the program is being used, compatibility with Steam is not guaranteed!</source>
         <translation>Используется Flatpak версия программы, совместимость со Steam не гарантируется!</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="138"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="140"/>
         <source>Disable sandbox for Proton (DANGEROUS!!!)</source>
         <translation>Отключить песочницу для Proton (ОПАСНО!!!)</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="139"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="141"/>
         <source>Allows running Proton outside the sandbox</source>
         <translation>Разрешает запуск Proton вне песочницы</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="147"/>
-        <source>Permission is required, run the command below:</source>
-        <translation>Требуется разрешение, запустите команду ниже:</translation>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="149"/>
+        <source>Permission is required, run the command below once:</source>
+        <translation>Требуется разрешение, запустите команду ниже один раз:</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="106"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="171"/>
+        <source>Copy command</source>
+        <translation>Скопировать команду</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="108"/>
         <source>Steam Overlay</source>
         <translation>Оверлей Steam</translation>
     </message>
     <message>
-        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="113"/>
+        <location filename="../src/ui/settingspages/platform_settings_page.cpp" line="115"/>
         <source>Enable OnlineFix</source>
         <translation>Включить OnlineFix</translation>
     </message>

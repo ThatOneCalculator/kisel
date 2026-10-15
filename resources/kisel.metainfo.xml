@@ -116,6 +116,13 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.5.1" date="2026-10-16">
+      <description translate="no">
+        <ul>
+          <li>Launching Proton outside the Flatpak sandbox (Disabled by default)</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.0" date="2026-10-12">
       <description translate="no">
         <ul>
